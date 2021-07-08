@@ -81,7 +81,14 @@ function LineGraph({ data }: LineGraphPropType) {
 
   return (
     <div className={styles.graph}>
-      <div className={styles.floatinfo}></div>
+      <div className={styles.floatinfo}>
+        {Object.entries(data).map(
+          ([id, el]) =>
+            el &&
+            el.show &&
+            !el.load && <div key={id}>Loading... {el.name}</div>
+        )}
+      </div>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={arrayData}>
           <XAxis dataKey="name" />
