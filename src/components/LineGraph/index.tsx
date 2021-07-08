@@ -112,9 +112,15 @@ function LineGraph({ data }: LineGraphPropType) {
         </LineChart>
       </ResponsiveContainer>
       <div className={styles.metadata}>
-        {Object.entries(data).map(([id, el]) => el && el.show && (
-          <span key={id} data-testid={'graph-' + id}>{el.name}</span>
-        ))}
+        {Object.entries(data).map(
+          ([id, el]) =>
+            el &&
+            el.show && (
+              <span key={id} data-testid={"graph-" + id}>
+                {el.name}
+              </span>
+            )
+        )}
       </div>
     </div>
   );

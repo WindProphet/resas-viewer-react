@@ -1,0 +1,13 @@
+{
+  "message": null,
+  "result": [
+    {
+      "prefCode": 1,
+      "prefName": "Hokkaido"
+    },
+    {
+      "prefCode": 2,
+      "prefName": "Aomori"
+    }
+  ]
+}

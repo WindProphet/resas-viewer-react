@@ -37,7 +37,7 @@ function PopulationView() {
   };
 
   let loadPopulationData = async (prefId: number) => {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
     let res = await fetchapi(
       `api/v1/population/composition/perYear?cityCode=-&prefCode=${prefId}`
     );
