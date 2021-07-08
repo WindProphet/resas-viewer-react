@@ -116,6 +116,7 @@ function PopulationView() {
             name: prefName,
             onChange: callback(prefCode),
           }))}
+          label="Prefectures"
         />
       </div>
       <div className={styles.graph}>
