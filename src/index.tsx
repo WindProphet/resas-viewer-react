@@ -1,12 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import PopulationView from "./containers/PopulationView";
+import ConfigPage from "./containers/ConfigPage";
 
 ReactDOM.render(
   <React.StrictMode>
-    <PopulationView />
+    <Router>
+      <Route path="/" exact component={PopulationView} />
+      <Route path="/config" component={ConfigPage} />
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );

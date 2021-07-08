@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import CheckBoxArray from "../../components/CheckBox/array";
 import styles from "./index.module.css";
 import LineGraph, {
@@ -100,7 +100,10 @@ function PopulationView() {
     return (
       <div>
         {error}
-        <a onClick={reload}>reload</a>
+        <a onClick={reload} href="#">
+          reload
+        </a>
+        <Link to="/config">Set API KEY</Link>
       </div>
     );
   if (!prefList) return <div>Loading.</div>;
