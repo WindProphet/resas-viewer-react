@@ -3,7 +3,7 @@
  * @returns RESAS API key
  */
 export const apikey = () =>
-  window.localStorage.getItem("api_key") || process.env.API_KEY || "";
+  window.localStorage.getItem("api_key") || process.env.REACT_APP_API_KEY || "";
 
 /**
  * Wrap `fetch` for RESAS REST API
@@ -11,7 +11,7 @@ export const apikey = () =>
  */
 export const fetchapi = (apiURL: string) =>
   fetch(
-    (process.env.API_ENDPOINT || "https://opendata.resas-portal.go.jp/") +
+    (process.env.REACT_APP_API_ENDPOINT || "https://opendata.resas-portal.go.jp/") +
       apiURL,
     {
       headers: { "X-API-KEY": apikey() },
