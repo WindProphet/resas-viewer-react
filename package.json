@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "resas-viewer-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -39,5 +39,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.30.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-react": "^7.24.0",
+    "prettier": "2.3.2"
   }
 }
