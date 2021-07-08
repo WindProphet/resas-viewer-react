@@ -13,13 +13,8 @@ function CheckBox({ id, name, onChange }: CheckBoxType) {
   };
 
   return (
-    <div>
-      <input
-        className={styles.checkbox}
-        type="checkbox"
-        id={id}
-        onChange={callback}
-      />
+    <div className={styles.checkbox}>
+      <input type="checkbox" id={id} onChange={callback} />
       <label htmlFor={id}>{name}</label>
     </div>
   );
