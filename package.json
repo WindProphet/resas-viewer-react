@@ -42,7 +42,7 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
+    "@typescript-eslint/parser": "^4.28.2",
     "eslint": "^7.30.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-jest": "^24.3.6",
