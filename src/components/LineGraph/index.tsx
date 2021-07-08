@@ -90,9 +90,18 @@ function LineGraph({ data }: LineGraphPropType) {
         )}
       </div>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={arrayData}>
+        <LineChart
+          data={arrayData}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis />
+          <YAxis name="Pop" tickSize={1}/>
           <Tooltip />
           <Legend />
           {Object.entries(data).map(

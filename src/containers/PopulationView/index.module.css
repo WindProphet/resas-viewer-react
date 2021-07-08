@@ -1,8 +1,38 @@
-.checkboxes {
-  display: block;
+@media screen and (min-width: 800px) {
+  .container {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: stretch;
+    height: 100%;
+  }
+  
+  .checkboxes {
+    display: block;
+    flex: 2;
+    margin: 30px;
+  }
+  
+  .graph {
+    display: block;
+    min-height: 300px;
+    flex: 3;
+    margin: 70px 30px;
+  }
+  
 }
 
-.graph {
-  display: block;
-  min-height: 600px;
+@media screen and (max-width: 800px) {
+  .container {
+    display: relative;
+  }
+  
+  .checkboxes {
+    display: block;
+    margin: 30px;
+  }
+  
+  .graph {
+    display: block;
+    margin: 30px;
+  }
 }
