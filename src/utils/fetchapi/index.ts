@@ -11,8 +11,8 @@ export const apikey = () =>
  */
 export const fetchapi = (apiURL: string) =>
   fetch(
-    (process.env.REACT_APP_API_ENDPOINT || "https://opendata.resas-portal.go.jp/") +
-      apiURL,
+    (process.env.REACT_APP_API_ENDPOINT ||
+      "https://opendata.resas-portal.go.jp/") + apiURL,
     {
       headers: { "X-API-KEY": apikey() },
     }
