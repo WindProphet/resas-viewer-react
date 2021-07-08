@@ -17,6 +17,7 @@
     min-height: 300px;
     flex: 3;
     margin: 70px 30px;
+    overflow: hidden;
   }
   
 }
@@ -33,6 +34,8 @@
   
   .graph {
     display: block;
+    height: 400px;
+    overflow-y: hidden;
     margin: 30px;
   }
 }
