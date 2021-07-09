@@ -3,99 +3,97 @@ import fetchMock from "jest-fetch-mock";
 import Page from "..";
 import { BrowserRouter as BR } from "react-router-dom";
 
-describe("when fetch well", () => {
-  beforeEach(() => {
-    fetchMock.doMock();
-    fetchMock.mockResponse((req) => {
-      let url = new URL(req.url);
-      let table: any = {
-        "/api/v1/prefectures": require("./prefs.json"),
-        "/api/v1/population/composition/perYear": {
-          "1": require("./hokkaido.json"),
-          "2": require("./aomori.json"),
-        }[url.searchParams.get("prefCode") || ""],
-      };
-      let res = table[url.pathname];
-      return Promise.resolve(
-        res
-          ? {
-              body: JSON.stringify(res),
-            }
-          : {
-              status: 404,
-              body: "Not Found",
-            }
-      );
-    });
-  });
-
-  it("should mock fetch", async () => {
-    let res = await fetch("https://example.org/api/v1/prefectures");
-    let json = await res.json();
-    expect(json["result"][0]["prefName"]).toBe("Hokkaido");
-  });
-
-  it("should contains prefectures list", async () => {
-    render(
-      <BR>
-        <Page />
-      </BR>
+beforeEach(() => {
+  fetchMock.doMock();
+  fetchMock.mockResponse((req) => {
+    let url = new URL(req.url);
+    let table: any = {
+      "/api/v1/prefectures": require("./prefs.json"),
+      "/api/v1/population/composition/perYear": {
+        "1": require("./hokkaido.json"),
+        "2": require("./aomori.json"),
+      }[url.searchParams.get("prefCode") || ""],
+    };
+    let res = table[url.pathname];
+    return Promise.resolve(
+      res
+        ? {
+            body: JSON.stringify(res),
+          }
+        : {
+            status: 404,
+            body: "Not Found",
+          }
     );
-    await waitFor(() => screen.getByText("Hokkaido"));
-    expect(document.getElementById("pref1")).toBeInTheDocument();
-    expect(screen.getByText("Hokkaido")).toBeInTheDocument();
-    expect(screen.getByText("Aomori")).toBeInTheDocument();
   });
+});
 
-  it("should show the graph", async () => {
-    render(
-      <BR>
-        <Page />
-      </BR>
-    );
-    await waitFor(() => screen.getByText("Aomori"));
-    let aomori = screen.getByText("Aomori");
+it("should mock fetch", async () => {
+  let res = await fetch("https://example.org/api/v1/prefectures");
+  let json = await res.json();
+  expect(json["result"][0]["prefName"]).toBe("Hokkaido");
+});
 
-    // suppress warning of zero size rechartjs graph
-    const warnSuppressing = jest
-      .spyOn(console, "warn")
-      .mockImplementation(() => {});
-    fireEvent.click(aomori);
+it("should contains prefectures list", async () => {
+  render(
+    <BR>
+      <Page />
+    </BR>
+  );
+  await waitFor(() => screen.getByText("Hokkaido"));
+  expect(document.getElementById("pref1")).toBeInTheDocument();
+  expect(screen.getByText("Hokkaido")).toBeInTheDocument();
+  expect(screen.getByText("Aomori")).toBeInTheDocument();
+});
 
-    await waitFor(() => screen.getByTestId("graph-2"));
-    warnSuppressing.mockRestore();
-    expect(screen.getByTestId("graph-2")).toContainHTML("Aomori");
-  });
+it("should show the graph", async () => {
+  render(
+    <BR>
+      <Page />
+    </BR>
+  );
+  await waitFor(() => screen.getByText("Aomori"));
+  let aomori = screen.getByText("Aomori");
 
-  it("should show loading interface", async () => {
-    fetchMock.mockResponseOnce(() => new Promise(() => {}));
-    render(
-      <BR>
-        <Page />
-      </BR>
-    );
-    await waitFor(() => screen.getByText("Loading"));
-    expect(screen.getByText("Loading")).toBeInTheDocument();
-  });
+  // suppress warning of zero size rechartjs graph
+  const warnSuppressing = jest
+    .spyOn(console, "warn")
+    .mockImplementation(() => {});
+  fireEvent.click(aomori);
 
-  it("should show error when bad request", async () => {
-    fetchMock.mockResponseOnce(
-      JSON.stringify({
-        statusCode: "403",
-        message: "Forbidden.",
-        description: "",
-      })
-    );
-    render(
-      <BR>
-        <Page />
-      </BR>
-    );
-    await waitFor(() => screen.getByText("Reload Page"));
-    expect(
-      screen.getByText(
-        "Response has been forbidden. You may update API KEY and try again."
-      )
-    ).toBeInTheDocument();
-  });
+  await waitFor(() => screen.getByTestId("graph-2"));
+  warnSuppressing.mockRestore();
+  expect(screen.getByTestId("graph-2")).toContainHTML("Aomori");
+});
+
+it("should show loading interface", async () => {
+  fetchMock.mockResponseOnce(() => new Promise(() => {}));
+  render(
+    <BR>
+      <Page />
+    </BR>
+  );
+  await waitFor(() => screen.getByText("Loading"));
+  expect(screen.getByText("Loading")).toBeInTheDocument();
+});
+
+it("should show error when bad request", async () => {
+  fetchMock.mockResponseOnce(
+    JSON.stringify({
+      statusCode: "403",
+      message: "Forbidden.",
+      description: "",
+    })
+  );
+  render(
+    <BR>
+      <Page />
+    </BR>
+  );
+  await waitFor(() => screen.getByText("Reload Page"));
+  expect(
+    screen.getByText(
+      "Response has been forbidden. You may update API KEY and try again."
+    )
+  ).toBeInTheDocument();
 });
