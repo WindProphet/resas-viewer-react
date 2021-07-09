@@ -100,7 +100,7 @@ function PopulationView() {
     return (
       <div className={styles.fullscreen}>
         <div className={styles.banner}>RESAS Viewer React</div>
-        <div style={{ display: "block", textAlign: "center" }}>
+        <div className={styles.block}>
           <div className={styles.errormessage}>{error}</div>
           <div>
             <a onClick={reload} href="#">
@@ -116,7 +116,7 @@ function PopulationView() {
     return (
       <div className={styles.fullscreen}>
         <div className={styles.banner}>RESAS Viewer React</div>
-        <div style={{ display: "block", textAlign: "center" }}>
+        <div className={styles.block}>
           <div style={{ margin: "30px" }}>
             <LoaderRipple />
           </div>
