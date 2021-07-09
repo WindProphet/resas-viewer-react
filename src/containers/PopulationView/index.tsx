@@ -7,6 +7,7 @@ import LineGraph, {
   DataArray,
 } from "../../components/LineGraph";
 import fetchapi from "../../utils/fetchapi";
+import { LoaderRipple } from "../../components/Loaders";
 
 interface PrefInfoType {
   prefCode: number;
@@ -37,7 +38,6 @@ function PopulationView() {
   };
 
   let loadPopulationData = async (prefId: number) => {
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
     let res = await fetchapi(
       `api/v1/population/composition/perYear?cityCode=-&prefCode=${prefId}`
     );
@@ -98,15 +98,34 @@ function PopulationView() {
 
   if (error)
     return (
-      <div>
-        {error}
-        <a onClick={reload} href="#">
-          reload
-        </a>
-        <Link to="/config">Set API KEY</Link>
+      <div className={styles.fullscreen}>
+        <div className={styles.banner}>RESAS Viewer React</div>
+        <div style={{ display: "block", textAlign: "center" }}>
+          <div className={styles.errormessage}>{error}</div>
+          <div>
+            <a onClick={reload} href="#">
+              Reload Page
+            </a>
+            <span style={{ margin: "20px" }} />
+            <Link to="/config">Set API KEY</Link>
+          </div>
+        </div>
       </div>
     );
-  if (!prefList) return <div>Loading.</div>;
+  if (!prefList)
+    return (
+      <div className={styles.fullscreen}>
+        <div className={styles.banner}>RESAS Viewer React</div>
+        <div style={{ display: "block", textAlign: "center" }}>
+          <div style={{ margin: "30px" }}>
+            <LoaderRipple />
+          </div>
+        </div>
+        <div>
+          <span>Loading</span> prefectures data...
+        </div>
+      </div>
+    );
   return (
     <div className={styles.container}>
       <div className={styles.banner}>RESAS Viewer React</div>

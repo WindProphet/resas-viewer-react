@@ -57,4 +57,11 @@ describe("when fetch well", () => {
     warnSuppressing.mockRestore();
     expect(screen.getByTestId("graph-2")).toContainHTML("Aomori");
   });
+
+  it("should show loading interface", async () => {
+    fetchMock.mockResponseOnce(() => new Promise(() => {}));
+    render(<Page />);
+    await waitFor(() => screen.getByText("Loading"));
+    expect(screen.getByText("Loading")).toBeInTheDocument();
+  });
 });
