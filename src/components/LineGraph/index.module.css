@@ -8,8 +8,39 @@
   position: absolute;
   right: 0;
   z-index: 1;
+  background: linear-gradient(
+    247deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.7) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  padding-left: 40px;
+  padding-bottom: 40px;
 }
 
 .metadata {
   display: none;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.loadingblock::before {
+  content: ", ";
+}
+
+.loadingblock:nth-child(1)::before {
+  content: "";
+}
+
+.loadingentry {
+  margin-top: 5px;
+}
+
+.loadingentry > .text {
+  margin-left: 10px;
 }

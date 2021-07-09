@@ -11,6 +11,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { LoaderRipple, LoaderDualRing } from "../Loaders";
 
 export interface DataPoint {
   value: number;
@@ -51,18 +52,30 @@ function LineGraph({ data }: LineGraphPropType) {
   let shownData = Object.entries(data).filter(
     ([_, el]) => el && el.show
   ) as GraphDataEntries;
-  if (shownData.length == 0) return <div>no data, choose some data</div>;
+  if (shownData.length == 0)
+    return (
+      <div className={styles.loading}>
+        <span>Check prefectures for showing graph</span>
+      </div>
+    );
 
   let renderData = shownData.filter(([_, el]) => el.load) as GraphReadyEntries;
   if (renderData.length == 0)
     return (
-      <div>
-        <div>now loading...</div>
-        {shownData.map(([id, el]) => (
-          <span key={id} className={styles.loadingblock}>
-            {el.name}
-          </span>
-        ))}
+      <div className={styles.loading}>
+        <div style={{ display: "block", textAlign: "center" }}>
+          <div style={{ margin: "30px" }}>
+            <LoaderRipple />
+          </div>
+          <div>
+            Loading Population Info:{" "}
+            {shownData.map(([id, el]) => (
+              <span key={id} className={styles.loadingblock}>
+                {el.name}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     );
 
@@ -87,7 +100,12 @@ function LineGraph({ data }: LineGraphPropType) {
           ([id, el]) =>
             el &&
             el.show &&
-            !el.load && <div key={id}>Loading... {el.name}</div>
+            !el.load && (
+              <div key={id} className={styles.loadingentry}>
+                <LoaderDualRing color={stringToColor(el.name)} />
+                <span className={styles.text}>{el.name}</span>
+              </div>
+            )
         )}
       </div>
       <ResponsiveContainer width="100%" height="100%">
