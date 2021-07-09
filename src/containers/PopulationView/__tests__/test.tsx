@@ -3,6 +3,13 @@ import fetchMock from "jest-fetch-mock";
 import Page from "..";
 import { BrowserRouter as BR } from "react-router-dom";
 
+const renderPage = () =>
+  render(
+    <BR>
+      <Page />
+    </BR>
+  );
+
 beforeEach(() => {
   fetchMock.doMock();
   fetchMock.mockResponse((req) => {
@@ -35,11 +42,7 @@ it("should mock fetch", async () => {
 });
 
 it("should contains prefectures list", async () => {
-  render(
-    <BR>
-      <Page />
-    </BR>
-  );
+  renderPage();
   await waitFor(() => screen.getByText("Hokkaido"));
   expect(document.getElementById("pref1")).toBeInTheDocument();
   expect(screen.getByText("Hokkaido")).toBeInTheDocument();
@@ -47,11 +50,7 @@ it("should contains prefectures list", async () => {
 });
 
 it("should show the graph", async () => {
-  render(
-    <BR>
-      <Page />
-    </BR>
-  );
+  renderPage();
   await waitFor(() => screen.getByText("Aomori"));
   let aomori = screen.getByText("Aomori");
 
@@ -68,16 +67,12 @@ it("should show the graph", async () => {
 
 it("should show loading interface", async () => {
   fetchMock.mockResponseOnce(() => new Promise(() => {}));
-  render(
-    <BR>
-      <Page />
-    </BR>
-  );
+  renderPage();
   await waitFor(() => screen.getByText("Loading"));
   expect(screen.getByText("Loading")).toBeInTheDocument();
 });
 
-it("should show error when bad request", async () => {
+it("should show error when request forbidden", async () => {
   fetchMock.mockResponseOnce(
     JSON.stringify({
       statusCode: "403",
@@ -85,15 +80,21 @@ it("should show error when bad request", async () => {
       description: "",
     })
   );
-  render(
-    <BR>
-      <Page />
-    </BR>
-  );
+  renderPage();
   await waitFor(() => screen.getByText("Reload Page"));
   expect(
     screen.getByText(
       "Response has been forbidden. You may update API KEY and try again."
     )
   ).toBeInTheDocument();
+});
+
+it("should show error when failed to load graph", async () => {
+  renderPage();
+  await waitFor(() => screen.getByText("Hokkaido"));
+  let aomori = screen.getByText("Aomori");
+  fetchMock.mockResponseOnce('"400"');
+  fireEvent.click(aomori);
+  await waitFor(() => screen.getByText("Reload Page"));
+  expect(screen.getByText("Bad Request")).toBeInTheDocument();
 });
