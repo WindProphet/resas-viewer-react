@@ -109,6 +109,7 @@ function PopulationView() {
   if (!prefList) return <div>Loading.</div>;
   return (
     <div className={styles.container}>
+      <div className={styles.banner}>RESAS Viewer React</div>
       <div className={styles.checkboxes}>
         <CheckBoxArray
           arr={Object.entries(prefList).map(([id, { prefCode, prefName }]) => ({

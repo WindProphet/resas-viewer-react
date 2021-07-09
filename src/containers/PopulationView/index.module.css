@@ -5,37 +5,52 @@
     align-items: stretch;
     height: 100%;
   }
-  
+
   .checkboxes {
     display: block;
     flex: 2;
-    margin: 30px;
+    margin: 100px 30px 0px 30px;
   }
-  
+
   .graph {
     display: block;
     min-height: 300px;
     flex: 3;
-    margin: 70px 30px;
+    margin: 100px 50px 70px 50px;
     overflow: hidden;
   }
-  
+
+  .banner {
+    position: absolute;
+    left: 0;
+  }
 }
 
 @media screen and (max-width: 800px) {
   .container {
     display: relative;
   }
-  
+
   .checkboxes {
     display: block;
     margin: 30px;
   }
-  
+
   .graph {
     display: block;
     height: 400px;
     overflow-y: hidden;
     margin: 30px;
   }
+
+  .banner {
+    position: relative;
+    height: 50px;
+    text-align: center;
+    background: linear-gradient(#ddd, #fff);
+  }
+}
+
+.banner {
+  padding: 20px;
 }
