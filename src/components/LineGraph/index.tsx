@@ -1,4 +1,5 @@
 import styles from "./index.module.css";
+import "./index.css";
 import stringToColor from "../../utils/stringHashColor";
 import {
   LineChart,
@@ -93,15 +94,29 @@ function LineGraph({ data }: LineGraphPropType) {
         <LineChart
           data={arrayData}
           margin={{
-            top: 5,
+            top: 25,
             right: 30,
-            left: 20,
+            left: 25,
             bottom: 5,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis name="Pop" tickSize={1}/>
+          <XAxis
+            dataKey="name"
+            label={{
+              value: "Year",
+              position: "insideBottomRight",
+              offset: -10,
+            }}
+          />
+          <YAxis
+            width={35}
+            label={{
+              value: "Population",
+              position: "insideTopLeft",
+              offset: -25,
+            }}
+          />
           <Tooltip />
           <Legend />
           {Object.entries(data).map(
