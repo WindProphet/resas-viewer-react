@@ -6,7 +6,7 @@ import LineGraph, {
   GraphDataType,
   DataArray,
 } from "../../components/LineGraph";
-import fetchapi from "../../utils/fetchapi";
+import fetchapi, { checkError } from "../../utils/fetchapi";
 import { LoaderRipple } from "../../components/Loaders";
 
 interface PrefInfoType {
@@ -26,6 +26,11 @@ function PopulationView() {
   let loadPrefListData = async () => {
     let res = await fetchapi("api/v1/prefectures");
     let msg = await res.json();
+    let error = checkError(msg);
+    if (error) {
+      setError(error);
+      return;
+    }
     if (!msg.message) {
       let prefArray: PrefInfoType[] = msg.result;
       let prefDict = Object.fromEntries(
@@ -42,6 +47,11 @@ function PopulationView() {
       `api/v1/population/composition/perYear?cityCode=-&prefCode=${prefId}`
     );
     let msg = await res.json();
+    let error = checkError(msg);
+    if (error) {
+      setError(error);
+      return;
+    }
     let popData: DataArray = msg.result.data[0].data;
 
     setData((prevData) => {

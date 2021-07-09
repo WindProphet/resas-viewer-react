@@ -18,4 +18,26 @@ export const fetchapi = (apiURL: string) =>
     }
   );
 
+export const checkError = (json: any) => {
+  try {
+    if (typeof json === "string") {
+      if (json === "400") {
+        return "Bad Request";
+      } else if (json === "404") {
+        return "Method Not Found";
+      } else {
+        return `Response Error: ${json}`;
+      }
+    } else if (json.statusCode === "403") {
+      return "Response has been forbidden. You may update API KEY and try again.";
+    } else if (json.statusCode === "404") {
+      return "Method Not Found";
+    } else if (json.message) {
+      return `Error: ${json.message}`;
+    }
+  } catch (error) {
+    return `Response ${json} has error: ${error}`;
+  }
+};
+
 export default fetchapi;

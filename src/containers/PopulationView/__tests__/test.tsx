@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
 import Page from "..";
+import { BrowserRouter as BR } from "react-router-dom";
 
 describe("when fetch well", () => {
   beforeEach(() => {
@@ -35,7 +36,11 @@ describe("when fetch well", () => {
   });
 
   it("should contains prefectures list", async () => {
-    render(<Page />);
+    render(
+      <BR>
+        <Page />
+      </BR>
+    );
     await waitFor(() => screen.getByText("Hokkaido"));
     expect(document.getElementById("pref1")).toBeInTheDocument();
     expect(screen.getByText("Hokkaido")).toBeInTheDocument();
@@ -43,7 +48,11 @@ describe("when fetch well", () => {
   });
 
   it("should show the graph", async () => {
-    render(<Page />);
+    render(
+      <BR>
+        <Page />
+      </BR>
+    );
     await waitFor(() => screen.getByText("Aomori"));
     let aomori = screen.getByText("Aomori");
 
@@ -60,8 +69,33 @@ describe("when fetch well", () => {
 
   it("should show loading interface", async () => {
     fetchMock.mockResponseOnce(() => new Promise(() => {}));
-    render(<Page />);
+    render(
+      <BR>
+        <Page />
+      </BR>
+    );
     await waitFor(() => screen.getByText("Loading"));
     expect(screen.getByText("Loading")).toBeInTheDocument();
+  });
+
+  it("should show error when bad request", async () => {
+    fetchMock.mockResponseOnce(
+      JSON.stringify({
+        statusCode: "403",
+        message: "Forbidden.",
+        description: "",
+      })
+    );
+    render(
+      <BR>
+        <Page />
+      </BR>
+    );
+    await waitFor(() => screen.getByText("Reload Page"));
+    expect(
+      screen.getByText(
+        "Response has been forbidden. You may update API KEY and try again."
+      )
+    ).toBeInTheDocument();
   });
 });
