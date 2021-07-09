@@ -9,7 +9,7 @@ export interface CheckBoxArrayType {
 function CheckBoxArray({ arr, label }: CheckBoxArrayType) {
   return (
     <div>
-      {label && <div>{label}</div>}
+      {label && <div className={styles.label}>{label}</div>}
       <div className={styles.array}>
         {arr.map(({ id, name, onChange }) => (
           <CheckBox key={id} id={id} name={name} onChange={onChange} />

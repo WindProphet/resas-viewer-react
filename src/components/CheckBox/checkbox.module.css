@@ -6,3 +6,7 @@
 .array {
   display: block;
 }
+
+.label {
+  margin-bottom: 20px;
+}
