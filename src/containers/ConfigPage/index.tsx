@@ -53,7 +53,7 @@ function ConfigPage() {
           />
         </div>
         <div style={{ marginTop: "15px" }}>
-          <a onClick={checkAPI} href="#">
+          <a className="button" onClick={checkAPI}>
             {
               {
                 none: "Check API",
@@ -64,7 +64,9 @@ function ConfigPage() {
             }
           </a>
           <span style={{ marginLeft: "20px" }} />
-          <Link to="/">Back</Link>
+          <Link className="button" to="/">
+            Back
+          </Link>
         </div>
       </div>
     </div>

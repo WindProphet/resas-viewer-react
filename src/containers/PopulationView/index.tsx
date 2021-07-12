@@ -135,11 +135,13 @@ function PopulationView() {
         <div className={styles.block}>
           <div className={styles.errormessage}>{error}</div>
           <div>
-            <a onClick={reload} href="#">
+            <a className="button" onClick={reload}>
               Reload Page
             </a>
             <span style={{ margin: "20px" }} />
-            <Link to="/config">Set API KEY</Link>
+            <Link className="button" to="/config">
+              Set API KEY
+            </Link>
           </div>
         </div>
       </div>
