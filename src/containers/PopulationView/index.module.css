@@ -42,6 +42,7 @@
     height: 400px;
     overflow-y: hidden;
     margin: 30px;
+    padding-bottom: 400px;
   }
 
   .banner {
