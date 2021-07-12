@@ -2,7 +2,7 @@
 
 An online viewer for [RESAS](https://opendata.resas-portal.go.jp/) making by React.
 
-[Online Access](resas-viewer-react.vercel.app)
+[Online Access](https://resas-viewer-react.vercel.app)
 
 ## Screeenshots
 
