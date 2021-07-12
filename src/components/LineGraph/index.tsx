@@ -14,23 +14,33 @@ import {
 import { LoaderRipple, LoaderDualRing } from "../Loaders";
 
 export interface DataPoint {
+  /** Y axis data */
   value: number;
+  /** X axis data */
   year: number;
 }
 
 export type DataArray = DataPoint[];
 
 export interface GraphDataLoading {
+  /** is this data still loading */
   load: false;
+  /** prefecture name */
   name: string;
+  /** whether this data should be shown */
   show: boolean;
+  /** async function for loading */
   promise: Promise<void>;
 }
 
 export interface GraphDataReady {
+  /** is this data still loading */
   load: true;
+  /** prefecture name */
   name: string;
+  /** whether this data should be shown */
   show: boolean;
+  /** data points */
   data: DataArray;
 }
 
@@ -45,9 +55,37 @@ export interface GraphDataType {
 }
 
 export interface LineGraphPropType {
+  /**
+   * Data for `LineGraph` Component
+   *
+   * `GraphDataType` is a dictionary where
+   *   prefectures names are keys and
+   *   prefectures population data are values
+   *
+   * Prefectures population data is defined as `GraphDataBlock` which is optional
+   * @param {boolean} show means whether this data will be shown on screen
+   * @param {boolean} load means whether this data has been fetched already
+   * @param {string} name means the showing name of this prefecture
+   * @param {Promise<void>} promise exists when data is loading
+   * @param {DataArray} data keeps the population data points
+   *
+   */
   data: GraphDataType;
 }
 
+/**
+ * Component for showing population line chart
+ *
+ * @component
+ * @example
+ * const data = {
+ *   "1": { show: true, load: false, name: "Hokkaido", promise: <pending...> },
+ *   "2": { show: true, load: true, name: "Aomori", data: [
+ *     { value: 100, year: 1960 },
+ *     { value: 100, year: 1970 },
+ *   ] }
+ * }
+ */
 function LineGraph({ data }: LineGraphPropType) {
   let shownData = Object.entries(data).filter(
     ([_, el]) => el && el.show

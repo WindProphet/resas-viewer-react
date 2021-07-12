@@ -54,7 +54,7 @@ it("should show the graph", async () => {
   await waitFor(() => screen.getByText("Aomori"));
   let aomori = screen.getByText("Aomori");
 
-  // suppress warning of zero size rechartjs graph
+  /** suppress warning of zero size rechartjs graph */
   const warnSuppressing = jest
     .spyOn(console, "warn")
     .mockImplementation(() => {});

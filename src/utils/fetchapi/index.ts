@@ -7,6 +7,8 @@ export const apikey = () =>
 
 /**
  * Wrap `fetch` for RESAS REST API
+ *
+ * Base URL will be defined from env `REACT_APP_API_ENDPOINT` or default one
  * @param apiURL REST API path
  */
 export const fetchapi = (apiURL: string) =>
@@ -18,6 +20,20 @@ export const fetchapi = (apiURL: string) =>
     }
   );
 
+/**
+ * check whether the response is an error message
+ *
+ * @returns Error message
+ * @example
+ * let res = await fetchapi("api/v1/prefectures");
+ * let msg = await res.json();
+ * let error = checkError(msg);
+ * if (error) {
+ *   setError(error);
+ *   return;
+ * }
+ * ...
+ */
 export const checkError = (json: any) => {
   try {
     if (typeof json === "string") {

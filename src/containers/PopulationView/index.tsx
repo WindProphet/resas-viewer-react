@@ -18,11 +18,18 @@ interface PrefListType {
   [index: string]: PrefInfoType;
 }
 
+/**
+ * Main page of this App, shows the population by checking each prefecture
+ */
 function PopulationView() {
+  // prefectures data, undefined when loading
   const [prefList, setPrefList] = useState<PrefListType>();
+  // error message, undefined when success
   const [error, setError] = useState<string>();
+  // graph data with checking what to show, empty dictionary when start
   const [data, setData] = useState<GraphDataType>({});
 
+  /** load prefectures list and then render the checkbox array */
   let loadPrefListData = async () => {
     let res = await fetchapi("api/v1/prefectures");
     let msg = await res.json();
@@ -42,6 +49,11 @@ function PopulationView() {
     }
   };
 
+  /**
+   * load prefectures data and then update the graph data
+   * @param prefId prefecture ID
+   * @returns update the graph data, it may be shown on page when checked
+   */
   let loadPopulationData = async (prefId: number) => {
     let res = await fetchapi(
       `api/v1/population/composition/perYear?cityCode=-&prefCode=${prefId}`
@@ -67,6 +79,14 @@ function PopulationView() {
     });
   };
 
+  /**
+   * callback of clicking a checkbox
+   *
+   * which is a high order function which accept two arguments successively
+   * @param prefId prefecture ID
+   * @param checked whether prefecture has been checked
+   * @return when checked, it will start loading data and change the interface into loading state
+   */
   let callback = (prefId: number) => (checked: boolean) => {
     let prefName = prefList ? prefList[prefId].prefName : "";
     if (checked) {
@@ -95,6 +115,7 @@ function PopulationView() {
     }
   };
 
+  /** reload this page when error */
   let reload = () => {
     setPrefList(void 0);
     setError(void 0);
@@ -103,6 +124,7 @@ function PopulationView() {
   };
 
   useEffect(() => {
+    // load prefectures data once when start
     loadPrefListData();
   }, []);
 

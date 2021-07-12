@@ -1,3 +1,9 @@
+/**
+ * Generate variable color from the hash of string
+ * @param str input string
+ * @returns color scheme
+ * @see https://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript/16348977#16348977
+ */
 function stringToColor(str: string) {
   var hash = 0;
   for (var i = 0; i < str.length; i++) {

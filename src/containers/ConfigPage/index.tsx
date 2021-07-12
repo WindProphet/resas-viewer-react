@@ -4,16 +4,22 @@ import styles from "../PopulationView/index.module.css";
 import configStyles from "./index.module.css";
 import fetchapi from "../../utils/fetchapi";
 
+/**
+ * ConfigPage for changing API Key
+ */
 function ConfigPage() {
   const [check, setCheck] = useState<
     "none" | "checking" | "goodapi" | "badapi"
   >("none");
   const inputElement = useRef<HTMLInputElement>(null);
+
+  /** change API key when the textbox changed */
   let callback: ChangeEventHandler<HTMLInputElement> = (event) => {
     localStorage.setItem("api_key", event.target.value);
     setCheck("none");
   };
 
+  /** check API key available */
   let checkAPI = async () => {
     setCheck("checking");
     try {
@@ -28,6 +34,7 @@ function ConfigPage() {
 
   useEffect(() => {
     if (inputElement.current) {
+      // load localStorage when rendering
       inputElement.current.value = localStorage.getItem("api_key") || "";
     }
   });
