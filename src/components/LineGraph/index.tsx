@@ -141,7 +141,12 @@ function LineGraph({ data }: LineGraphPropType) {
             !el.load && (
               <div key={id} className={styles.loadingentry}>
                 <LoaderDualRing color={stringToColor(el.name)} />
-                <span className={styles.text}>{el.name}</span>
+                <span
+                  className={styles.text}
+                  data-testid={"graph-loading-" + id}
+                >
+                  {el.name}
+                </span>
               </div>
             )
         )}
