@@ -98,3 +98,17 @@ it("should show error when failed to load graph", async () => {
   await waitFor(() => screen.getByText("Reload Page"));
   expect(screen.getByText("Bad Request")).toBeInTheDocument();
 });
+
+it("should show error when bad response", async () => {
+  renderPage();
+  await waitFor(() => screen.getByText("Hokkaido"));
+  fetchMock.mockResponseOnce(
+    JSON.stringify({
+      message: null,
+      result: "Here is a strange response",
+    })
+  );
+  fireEvent.click(screen.getByText("Aomori"));
+  await waitFor(() => screen.getByText("Reload Page"));
+  expect(screen.getByText("Reload Page")).toBeInTheDocument();
+});

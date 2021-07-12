@@ -6,7 +6,7 @@ import LineGraph, {
   GraphDataType,
   DataArray,
 } from "../../components/LineGraph";
-import fetchapi, { checkError } from "../../utils/fetchapi";
+import fetchapi, { throwError } from "../../utils/fetchapi";
 import { LoaderRipple } from "../../components/Loaders";
 
 interface PrefInfoType {
@@ -30,54 +30,44 @@ function PopulationView() {
   const [data, setData] = useState<GraphDataType>({});
 
   /** load prefectures list and then render the checkbox array */
-  let loadPrefListData = async () => {
-    let res = await fetchapi("api/v1/prefectures");
-    let msg = await res.json();
-    let error = checkError(msg);
-    if (error) {
-      setError(error);
-      return;
-    }
-    if (!msg.message) {
-      let prefArray: PrefInfoType[] = msg.result;
-      let prefDict = Object.fromEntries(
-        prefArray.map((info) => [info.prefCode, info])
-      );
-      setPrefList(prefDict);
-    } else {
-      setError(msg.message);
-    }
-  };
+  let loadPrefListData = () =>
+    fetchapi("api/v1/prefectures")
+      .then((res) => res.json())
+      .then((res) => throwError(res))
+      .then((res) =>
+        Object.fromEntries(
+          (res.result as PrefInfoType[]).map((info) => [info.prefCode, info])
+        )
+      )
+      .then(setPrefList)
+      .catch((err) => setError(String(err)));
 
   /**
    * load prefectures data and then update the graph data
    * @param prefId prefecture ID
    * @returns update the graph data, it may be shown on page when checked
    */
-  let loadPopulationData = async (prefId: number) => {
-    let res = await fetchapi(
+  let loadPopulationData = (prefId: number) =>
+    fetchapi(
       `api/v1/population/composition/perYear?cityCode=-&prefCode=${prefId}`
-    );
-    let msg = await res.json();
-    let error = checkError(msg);
-    if (error) {
-      setError(error);
-      return;
-    }
-    let popData: DataArray = msg.result.data[0].data;
-
-    setData((prevData) => {
-      let updateData: GraphDataType = {};
-      let { show, name } = prevData[prefId] || { show: false, name: "" };
-      updateData[prefId] = {
-        show,
-        name,
-        load: true,
-        data: popData,
-      };
-      return { ...prevData, ...updateData };
-    });
-  };
+    )
+      .then((res) => res.json())
+      .then((res) => throwError(res))
+      .then((res) => res.result.data[0].data as DataArray)
+      .then((popData) =>
+        setData((prevData) => {
+          let updateData: GraphDataType = {};
+          let { show, name } = prevData[prefId] || { show: false, name: "" };
+          updateData[prefId] = {
+            show,
+            name,
+            load: true,
+            data: popData,
+          };
+          return { ...prevData, ...updateData };
+        })
+      )
+      .catch((err) => setError(String(err)));
 
   /**
    * callback of clicking a checkbox

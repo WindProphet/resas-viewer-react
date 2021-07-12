@@ -56,4 +56,12 @@ export const checkError = (json: any) => {
   }
 };
 
+export const throwError = (json: any) => {
+  let error = checkError(json);
+  if (error) {
+    throw error;
+  }
+  return json;
+};
+
 export default fetchapi;
