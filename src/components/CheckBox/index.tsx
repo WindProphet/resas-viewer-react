@@ -1,5 +1,6 @@
 import { ChangeEventHandler } from "react";
 import styles from "./checkbox.module.css";
+import tick from "./tick.svg";
 
 export interface CheckBoxType {
   /** checkbox ID also DOM Element ID */
@@ -25,8 +26,23 @@ function CheckBox({ id, name, onChange }: CheckBoxType) {
 
   return (
     <div className={styles.checkbox}>
-      <input type="checkbox" id={id} onChange={callback} />
-      <label htmlFor={id}>{name}</label>
+      <input
+        className={styles.main}
+        type="checkbox"
+        id={id}
+        onChange={callback}
+      />
+      <label className={styles.label} htmlFor={id}>
+        <span>
+          <svg width="12px" height="10px">
+            <polyline
+              xmlns="http://www.w3.org/2000/svg"
+              points="1.5 6 4.5 9 10.5 1"
+            />
+          </svg>
+        </span>
+        <span>{name}</span>
+      </label>
     </div>
   );
 }

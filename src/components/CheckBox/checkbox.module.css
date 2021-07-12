@@ -1,7 +1,13 @@
 .checkbox {
-  padding: 0 20px;
-  margin-top: 8px;
+  padding: 5px 5px;
+  margin-top: 6px;
+  margin-right: 10px;
   display: inline-block;
+  border-radius: 8px;
+}
+
+.checkbox:hover {
+  background: #eee;
 }
 
 .array {
@@ -9,5 +15,68 @@
 }
 
 .label {
-  margin-bottom: 20px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.label:not(:last-child) {
+  margin-right: 6px;
+}
+
+.label span {
+  float: left;
+  vertical-align: middle;
+  transform: translate3d(0, 0, 0);
+}
+
+.label span:first-child {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  transform: scale(1);
+  border: 2px solid #c8ccd4;
+  transition: all 0.2s ease;
+}
+
+.label span:first-child svg {
+  position: absolute;
+  top: 3px;
+  left: 1.4px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 18px;
+  stroke-dashoffset: 18px;
+  transition: all 0.3s ease;
+  transition-delay: 0.1s;
+  transform: translate3d(0, 0, 0);
+}
+
+.label span:last-child {
+  padding-left: 5px;
+  line-height: 18px;
+}
+
+.label:hover span:first-child {
+  border-color: #999;
+}
+
+.main:checked + .label span:first-child {
+  background: #999;
+  border-color: #999;
+  animation: myAnimation 0.4s ease;
+}
+
+.main:checked + .label span:first-child svg {
+  stroke-dashoffset: 0;
+}
+
+.main {
+  display: none;
 }
