@@ -1,5 +1,5 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import * as fetch from "node-fetch";
+import fetch from "node-fetch";
 
 export default (req: VercelRequest, res: VercelResponse) => {
   const api =
