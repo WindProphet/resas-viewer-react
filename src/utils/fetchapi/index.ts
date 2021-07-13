@@ -5,6 +5,13 @@
 export const apikey = () =>
   window.localStorage.getItem("api_key") || process.env.REACT_APP_API_KEY || "";
 
+/** Wrap URL scheme when using proxy */
+const urlwrap = (apiURL: string) =>
+  process.env.REACT_APP_API_PROXY
+    ? `/api/proxy?url=${encodeURIComponent(apiURL)}`
+    : (process.env.REACT_APP_API_ENDPOINT ||
+        "https://opendata.resas-portal.go.jp/") + apiURL;
+
 /**
  * Wrap `fetch` for RESAS REST API
  *
@@ -12,13 +19,9 @@ export const apikey = () =>
  * @param apiURL REST API path
  */
 export const fetchapi = (apiURL: string) =>
-  fetch(
-    (process.env.REACT_APP_API_ENDPOINT ||
-      "https://opendata.resas-portal.go.jp/") + apiURL,
-    {
-      headers: { "X-API-KEY": apikey() },
-    }
-  );
+  fetch(urlwrap(apiURL), {
+    headers: { "X-API-KEY": apikey() },
+  });
 
 /**
  * check whether the response is an error message
